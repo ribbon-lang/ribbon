@@ -1,6 +1,6 @@
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
 
-version = "0.0.0"
+version = "0.1.0"
 
 plugins {
 	kotlin("jvm") version "1.7.0"
