@@ -1,5 +1,7 @@
 package ribbon
 
+import ribbon.cli.Repl
+
 fun main() {
-	println("Hello, Ribbon!")
+	Repl.run()
 }
