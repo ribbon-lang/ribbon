@@ -1,3 +1,4 @@
+import org.codehaus.groovy.runtime.ProcessGroovyMethods
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
 
 version = "0.1.0"
@@ -20,8 +21,18 @@ application {
 	mainClass.set("ribbon.MainKt")
 }
 
-tasks.test {
-	useJUnitPlatform()
-	testLogging.exceptionFormat = FULL
-	testLogging.showStackTraces = false
+tasks {
+	withType<Jar> {
+		val process = ProcessGroovyMethods.execute("git rev-parse --short HEAD")
+		val hash = ProcessGroovyMethods.getText(process).trim()
+
+		manifest.attributes["Specification-Version"] = archiveVersion
+		manifest.attributes["Implementation-Version"] = hash
+	}
+
+	test {
+		useJUnitPlatform()
+		testLogging.exceptionFormat = FULL
+		testLogging.showStackTraces = false
+	}
 }
