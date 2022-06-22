@@ -1,5 +1,6 @@
 import org.codehaus.groovy.runtime.ProcessGroovyMethods
-import org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat.*
+import org.gradle.api.tasks.testing.logging.TestLogEvent.*
 
 version = "0.1.0"
 
@@ -34,7 +35,11 @@ tasks {
 	test {
 		finalizedBy(jacocoTestReport)
 		useJUnitPlatform()
-		testLogging.exceptionFormat = FULL
-		testLogging.showStackTraces = false
+
+		testLogging {
+			events(FAILED, PASSED, SKIPPED)
+			exceptionFormat = FULL
+			showStackTraces = false
+		}
 	}
 }
