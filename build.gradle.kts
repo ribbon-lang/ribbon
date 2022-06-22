@@ -32,6 +32,7 @@ tasks {
 	}
 
 	test {
+		finalizedBy(jacocoTestReport)
 		useJUnitPlatform()
 		testLogging.exceptionFormat = FULL
 		testLogging.showStackTraces = false
