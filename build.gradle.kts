@@ -9,6 +9,7 @@ plugins {
 	application
 	jacoco
 	id("com.github.johnrengelman.shadow") version "7.1.2"
+	id("com.github.gmazzo.buildconfig") version "3.1.0"
 }
 
 repositories {
@@ -23,15 +24,16 @@ application {
 	mainClass.set("ribbon.MainKt")
 }
 
+buildConfig {
+	val process = ProcessGroovyMethods.execute("git rev-parse --short HEAD")
+	val hash = ProcessGroovyMethods.getText(process).trim()
+
+	packageName("ribbon")
+	buildConfigField("String", "RIBBON_VERSION", "\"$version\"")
+	buildConfigField("String", "RIBBON_BUILD", "\"$hash\"")
+}
+
 tasks {
-	withType<Jar> {
-		val process = ProcessGroovyMethods.execute("git rev-parse --short HEAD")
-		val hash = ProcessGroovyMethods.getText(process).trim()
-
-		manifest.attributes["Specification-Version"] = archiveVersion
-		manifest.attributes["Implementation-Version"] = hash
-	}
-
 	test {
 		finalizedBy(jacocoTestReport)
 		useJUnitPlatform()
