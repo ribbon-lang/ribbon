@@ -1,10 +1,8 @@
 package ribbon.cli
 
-object Constants {
-	private val ribbonPackage = ClassLoader.getSystemClassLoader().getDefinedPackage("ribbon")
-	private val specVer = ribbonPackage.getSpecificationVersion()
-	private val implVer = ribbonPackage.getImplementationVersion()
+import ribbon.BuildConfig
 
+object Constants {
 	const val REPL_PROMPT = "> "
 
 	const val REPL_HELP_CMD = ":h"
@@ -17,8 +15,8 @@ object Constants {
 	)
 
 	val REPL_WELCOME_MSG = AsciiBox(
-		"Ribbon v$specVer",
-		"(build $implVer)",
+		"Ribbon v${BuildConfig.RIBBON_VERSION}",
+		"(build ${BuildConfig.RIBBON_BUILD})",
 		"Type \":h\" for more information."
 	)
 }
