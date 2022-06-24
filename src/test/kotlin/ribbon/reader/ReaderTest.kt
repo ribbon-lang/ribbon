@@ -3,10 +3,21 @@ import kotlin.test.*
 import ribbon.reader.*
 
 class ReaderTest {
+	private fun assertReaderOutput(output: List<Triple<Char, Int, Int>>, reader: Reader) {
+		output.forEach {
+			val (char, line, col) = it
+			assertEquals(char, reader.peek())
+			assertEquals(Pair(line, col), reader.pos())
+			reader.next()
+		}
+
+		assertEquals(Char.MIN_VALUE, reader.peek())
+	}
+
 	@Test
 	fun testEmptyReader() {
 		val reader = Reader("")
-		assertEquals(Pair(Char.MIN_VALUE, Pair(1, 0)), reader.next())
+		assertReaderOutput(listOf(), reader)
 	}
 
 	@Test
@@ -15,39 +26,49 @@ class ReaderTest {
 			|abc
 		""".trimMargin())
 
-		listOf(
-			Pair('a', Pair(1, 0)),
-			Pair('b', Pair(1, 1)),
-			Pair('c', Pair(1, 2)),
-			Pair(Char.MIN_VALUE, Pair(1, 3))
-		).forEach { assertEquals(it, reader.next()) }
+		assertReaderOutput(listOf(
+			Triple('a', 1, 0),
+			Triple('b', 1, 1),
+			Triple('c', 1, 2)
+		), reader)
 
 		reader = Reader("""
 			|ab
 			|
 		""".trimMargin())
 
-		listOf(
-			Pair('a', Pair(1, 0)),
-			Pair('b', Pair(1, 1)),
-			Pair('\n', Pair(1, 2)),
-			Pair(Char.MIN_VALUE, Pair(2, 0))
-		).forEach { assertEquals(it, reader.next()) }
+		assertReaderOutput(listOf(
+			Triple('a', 1, 0),
+			Triple('b', 1, 1),
+			Triple('\n', 1, 2)
+		), reader)
 	}
 
 	@Test
 	fun testOneLineInputWithSpaces() {
-		val reader = Reader("""
+		var reader = Reader("""
 			| a b
 		""".trimMargin())
 
-		listOf(
-			Pair(' ', Pair(1, 0)),
-			Pair('a', Pair(1, 1)),
-			Pair(' ', Pair(1, 2)),
-			Pair('b', Pair(1, 3)),
-			Pair(Char.MIN_VALUE, Pair(1, 4))
-		).forEach { assertEquals(it, reader.next()) }
+		assertReaderOutput(listOf(
+			Triple(' ', 1, 0),
+			Triple('a', 1, 1),
+			Triple(' ', 1, 2),
+			Triple('b', 1, 3)
+		), reader)
+
+		reader = Reader("""
+			| a b
+			|
+		""".trimMargin())
+
+		assertReaderOutput(listOf(
+			Triple(' ', 1, 0),
+			Triple('a', 1, 1),
+			Triple(' ', 1, 2),
+			Triple('b', 1, 3),
+			Triple('\n', 1, 4)
+		), reader)
 	}
 
 	@Test
@@ -59,16 +80,15 @@ class ReaderTest {
 			|d
 		""".trimMargin())
 
-		listOf(
-			Pair('a', Pair(1, 0)),
-			Pair('b', Pair(1, 1)),
-			Pair('\n', Pair(1, 2)),
-			Pair('c', Pair(2, 0)),
-			Pair('\n', Pair(2, 1)),
-			Pair('\n', Pair(3, 0)),
-			Pair('d', Pair(4, 0)),
-			Pair(Char.MIN_VALUE, Pair(4, 1))
-		).forEach { assertEquals(it, reader.next()) }
+		assertReaderOutput(listOf(
+			Triple('a', 1, 0),
+			Triple('b', 1, 1),
+			Triple('\n', 1, 2),
+			Triple('c', 2, 0),
+			Triple('\n', 2, 1),
+			Triple('\n', 3, 0),
+			Triple('d', 4, 0)
+		), reader)
 	}
 
 	@Test
@@ -82,22 +102,21 @@ class ReaderTest {
 			|
 		""".trimMargin())
 
-		listOf(
-			Pair(' ', Pair(1, 0)),
-			Pair('a', Pair(1, 1)),
-			Pair('b', Pair(1, 2)),
-			Pair('\n', Pair(1, 3)),
-			Pair('c', Pair(2, 0)),
-			Pair('\n', Pair(2, 1)),
-			Pair('\n', Pair(3, 0)),
-			Pair(' ', Pair(4, 0)),
-			Pair(' ', Pair(4, 1)),
-			Pair('d', Pair(4, 2)),
-			Pair('\n', Pair(4, 3)),
-			Pair(' ', Pair(5, 0)),
-			Pair('e', Pair(5, 1)),
-			Pair('\n', Pair(5, 2)),
-			Pair(Char.MIN_VALUE, Pair(6, 0))
-		).forEach { assertEquals(it, reader.next()) }
+		assertReaderOutput(listOf(
+			Triple(' ', 1, 0),
+			Triple('a', 1, 1),
+			Triple('b', 1, 2),
+			Triple('\n', 1, 3),
+			Triple('c', 2, 0),
+			Triple('\n', 2, 1),
+			Triple('\n', 3, 0),
+			Triple(' ', 4, 0),
+			Triple(' ', 4, 1),
+			Triple('d', 4, 2),
+			Triple('\n', 4, 3),
+			Triple(' ', 5, 0),
+			Triple('e', 5, 1),
+			Triple('\n', 5, 2)
+		), reader)
 	}
 }
