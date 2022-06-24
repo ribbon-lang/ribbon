@@ -15,7 +15,7 @@ class AsciiBoxTest {
 	}
 
 	@Test
-	fun testAsciiBoxWithOneLine() {
+	fun testOneLineOfText() {
 		val expected = """
 			┌──────┐
 			│ test │
@@ -27,7 +27,7 @@ class AsciiBoxTest {
 	}
 
 	@Test
-	fun testAsciiBoxWithMultipleLines() {
+	fun testMultipleLinesOfText() {
 		val expected = """
 			┌───────┐
 			│ 123   │

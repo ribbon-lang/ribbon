@@ -22,7 +22,7 @@ class ReplTest {
 	}
 
 	@Test
-	fun testReplHelpCommand() {
+	fun testHelpCommand() {
 		withTextFromSystemIn(Constants.REPL_HELP_CMD).execute {
 			val expected = buildString {
 				appendLine(Constants.REPL_WELCOME_MSG)
@@ -40,7 +40,7 @@ class ReplTest {
 	}
 
 	@Test
-	fun testReplQuitCommand() {
+	fun testQuitCommand() {
 		withTextFromSystemIn(Constants.REPL_QUIT_CMD, Constants.REPL_HELP_CMD).execute {
 			val expected = buildString {
 				appendLine(Constants.REPL_WELCOME_MSG)
@@ -56,7 +56,7 @@ class ReplTest {
 	}
 
 	@Test
-	fun testReplMultipleCommands() {
+	fun testMultipleCommands() {
 		withTextFromSystemIn(Constants.REPL_HELP_CMD, Constants.REPL_QUIT_CMD, Constants.REPL_HELP_CMD).execute {
 			val expected = buildString {
 				appendLine(Constants.REPL_WELCOME_MSG)
@@ -74,7 +74,7 @@ class ReplTest {
 	}
 
 	@Test
-	fun testReplNonCommandsEchoed() {
+	fun testNonCommandsEchoed() {
 		withTextFromSystemIn("Hello, Ribbon!").execute {
 			val expected = buildString {
 				appendLine(Constants.REPL_WELCOME_MSG)
