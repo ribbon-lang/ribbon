@@ -12,8 +12,6 @@ class Reader(private val input: String) {
 	fun peek(): Char = if (index < input.length) input[index] else Char.MIN_VALUE
 
 	fun next() {
-		if (index == input.length) return
-
 		if (peek() == '\n') {
 			lineNum++
 			colNum = 0
