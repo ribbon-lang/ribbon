@@ -3,7 +3,7 @@ import kotlin.test.*
 import ribbon.reader.*
 
 class ReaderTest {
-	private fun assertReaderOutput(output: List<Triple<Char, Int, Int>>, reader: Reader) {
+	private fun assertReaderOutput(reader: Reader, output: List<Triple<Char, Int, Int>>) {
 		output.forEach {
 			val (char, line, col) = it
 			assertEquals(char, reader.peek())
@@ -17,7 +17,7 @@ class ReaderTest {
 	@Test
 	fun testEmptyReader() {
 		val reader = Reader("")
-		assertReaderOutput(listOf(), reader)
+		assertReaderOutput(reader, listOf())
 	}
 
 	@Test
@@ -26,22 +26,22 @@ class ReaderTest {
 			|abc
 		""".trimMargin())
 
-		assertReaderOutput(listOf(
+		assertReaderOutput(reader, listOf(
 			Triple('a', 1, 0),
 			Triple('b', 1, 1),
 			Triple('c', 1, 2)
-		), reader)
+		))
 
 		reader = Reader("""
 			|ab
 			|
 		""".trimMargin())
 
-		assertReaderOutput(listOf(
+		assertReaderOutput(reader, listOf(
 			Triple('a', 1, 0),
 			Triple('b', 1, 1),
 			Triple('\n', 1, 2)
-		), reader)
+		))
 	}
 
 	@Test
@@ -50,25 +50,25 @@ class ReaderTest {
 			| a b
 		""".trimMargin())
 
-		assertReaderOutput(listOf(
+		assertReaderOutput(reader, listOf(
 			Triple(' ', 1, 0),
 			Triple('a', 1, 1),
 			Triple(' ', 1, 2),
 			Triple('b', 1, 3)
-		), reader)
+		))
 
 		reader = Reader("""
 			| a b
 			|
 		""".trimMargin())
 
-		assertReaderOutput(listOf(
+		assertReaderOutput(reader, listOf(
 			Triple(' ', 1, 0),
 			Triple('a', 1, 1),
 			Triple(' ', 1, 2),
 			Triple('b', 1, 3),
 			Triple('\n', 1, 4)
-		), reader)
+		))
 	}
 
 	@Test
@@ -80,7 +80,7 @@ class ReaderTest {
 			|d
 		""".trimMargin())
 
-		assertReaderOutput(listOf(
+		assertReaderOutput(reader, listOf(
 			Triple('a', 1, 0),
 			Triple('b', 1, 1),
 			Triple('\n', 1, 2),
@@ -88,7 +88,7 @@ class ReaderTest {
 			Triple('\n', 2, 1),
 			Triple('\n', 3, 0),
 			Triple('d', 4, 0)
-		), reader)
+		))
 	}
 
 	@Test
@@ -102,7 +102,7 @@ class ReaderTest {
 			|
 		""".trimMargin())
 
-		assertReaderOutput(listOf(
+		assertReaderOutput(reader, listOf(
 			Triple(' ', 1, 0),
 			Triple('a', 1, 1),
 			Triple('b', 1, 2),
@@ -117,6 +117,6 @@ class ReaderTest {
 			Triple(' ', 5, 0),
 			Triple('e', 5, 1),
 			Triple('\n', 5, 2)
-		), reader)
+		))
 	}
 }
