@@ -7,19 +7,20 @@ class Reader(private val input: String) {
 	private var lineNum = 1
 	private var colNum = 0
 
-	fun next(): Pair<Char, Position> {
-		if (index == input.length) {
-			return Pair(Char.MIN_VALUE, Pair(lineNum, colNum))
-		}
+	fun pos(): Position = Pair(lineNum, colNum)
 
-		val char = input[index++]
-		val pos = Pair(lineNum, colNum++)
+	fun peek(): Char = if (index < input.length) input[index] else Char.MIN_VALUE
 
-		if (char == '\n') {
+	fun next() {
+		if (index == input.length) return
+
+		if (peek() == '\n') {
 			lineNum++
 			colNum = 0
+		} else {
+			colNum++
 		}
 
-		return Pair(char, pos)
+		index++
 	}
 }
