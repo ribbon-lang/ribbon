@@ -6,7 +6,7 @@ class ReaderTest {
 	@Test
 	fun testEmptyReader() {
 		val reader = Reader("")
-		assertNull(reader.next())
+		assertEquals(Pair(Char.MIN_VALUE, Pair(1, 0)), reader.next())
 	}
 
 	@Test
@@ -19,7 +19,7 @@ class ReaderTest {
 			Pair('a', Pair(1, 0)),
 			Pair('b', Pair(1, 1)),
 			Pair('c', Pair(1, 2)),
-			null
+			Pair(Char.MIN_VALUE, Pair(1, 3))
 		).forEach { assertEquals(it, reader.next()) }
 
 		reader = Reader("""
@@ -31,7 +31,7 @@ class ReaderTest {
 			Pair('a', Pair(1, 0)),
 			Pair('b', Pair(1, 1)),
 			Pair('\n', Pair(1, 2)),
-			null
+			Pair(Char.MIN_VALUE, Pair(2, 0))
 		).forEach { assertEquals(it, reader.next()) }
 	}
 
@@ -46,7 +46,7 @@ class ReaderTest {
 			Pair('a', Pair(1, 1)),
 			Pair(' ', Pair(1, 2)),
 			Pair('b', Pair(1, 3)),
-			null
+			Pair(Char.MIN_VALUE, Pair(1, 4))
 		).forEach { assertEquals(it, reader.next()) }
 	}
 
@@ -67,7 +67,7 @@ class ReaderTest {
 			Pair('\n', Pair(2, 1)),
 			Pair('\n', Pair(3, 0)),
 			Pair('d', Pair(4, 0)),
-			null
+			Pair(Char.MIN_VALUE, Pair(4, 1))
 		).forEach { assertEquals(it, reader.next()) }
 	}
 
@@ -97,7 +97,7 @@ class ReaderTest {
 			Pair(' ', Pair(5, 0)),
 			Pair('e', Pair(5, 1)),
 			Pair('\n', Pair(5, 2)),
-			null
+			Pair(Char.MIN_VALUE, Pair(6, 0))
 		).forEach { assertEquals(it, reader.next()) }
 	}
 }
