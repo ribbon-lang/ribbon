@@ -72,6 +72,7 @@ class Lexer(private val reader: Reader) {
 			'/' -> lexSymbol(TokenKind.Slash, "/")
 			'(' -> lexSymbol(TokenKind.LParen, "(")
 			')' -> lexSymbol(TokenKind.RParen, ")")
+			';' -> lexSymbol(TokenKind.Semicolon, ";")
 			else -> lexSymbol(TokenKind.Eof, "")
 		}
 	}

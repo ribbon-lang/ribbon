@@ -95,7 +95,7 @@ class LexerTest {
 
 	@Test
 	fun testLexerWithMixedInput() {
-		var lexer = makeLexer("90f x++  y*=( z )  a=36b(/ ) =c")
+		var lexer = makeLexer("90f x++;  y*=( z ) ;a=36b(/ ) =c")
 
 		assertLexerOutput(lexer, listOf(
 			Token(TokenKind.Integer, "90", Pair(1, 0)),
@@ -103,26 +103,28 @@ class LexerTest {
 			Token(TokenKind.Identifier, "x", Pair(1, 4)),
 			Token(TokenKind.Plus, "+", Pair(1, 5)),
 			Token(TokenKind.Plus, "+", Pair(1, 6)),
-			Token(TokenKind.Identifier, "y", Pair(1, 9)),
-			Token(TokenKind.Asterisk, "*", Pair(1, 10)),
-			Token(TokenKind.Equal, "=", Pair(1, 11)),
-			Token(TokenKind.LParen, "(", Pair(1, 12)),
-			Token(TokenKind.Identifier, "z", Pair(1, 14)),
-			Token(TokenKind.RParen, ")", Pair(1, 16)),
-			Token(TokenKind.Identifier, "a", Pair(1, 19)),
-			Token(TokenKind.Equal, "=", Pair(1, 20)),
-			Token(TokenKind.Integer, "36", Pair(1, 21)),
-			Token(TokenKind.Identifier, "b", Pair(1, 23)),
-			Token(TokenKind.LParen, "(", Pair(1, 24)),
-			Token(TokenKind.Slash, "/", Pair(1, 25)),
-			Token(TokenKind.RParen, ")", Pair(1, 27)),
-			Token(TokenKind.Equal, "=", Pair(1, 29)),
-			Token(TokenKind.Identifier, "c", Pair(1, 30))
+			Token(TokenKind.Semicolon, ";", Pair(1, 7)),
+			Token(TokenKind.Identifier, "y", Pair(1, 10)),
+			Token(TokenKind.Asterisk, "*", Pair(1, 11)),
+			Token(TokenKind.Equal, "=", Pair(1, 12)),
+			Token(TokenKind.LParen, "(", Pair(1, 13)),
+			Token(TokenKind.Identifier, "z", Pair(1, 15)),
+			Token(TokenKind.RParen, ")", Pair(1, 17)),
+			Token(TokenKind.Semicolon, ";", Pair(1, 19)),
+			Token(TokenKind.Identifier, "a", Pair(1, 20)),
+			Token(TokenKind.Equal, "=", Pair(1, 21)),
+			Token(TokenKind.Integer, "36", Pair(1, 22)),
+			Token(TokenKind.Identifier, "b", Pair(1, 24)),
+			Token(TokenKind.LParen, "(", Pair(1, 25)),
+			Token(TokenKind.Slash, "/", Pair(1, 26)),
+			Token(TokenKind.RParen, ")", Pair(1, 28)),
+			Token(TokenKind.Equal, "=", Pair(1, 30)),
+			Token(TokenKind.Identifier, "c", Pair(1, 31))
 		))
 
 		lexer = makeLexer("""
-			|a = 3 * (0)
-			|b = (9 - 45)**a
+			|a = 3 * (0);
+			|b = (9 - 45)**a;
 			|a+b / 3
 		""")
 
@@ -134,6 +136,7 @@ class LexerTest {
 			Token(TokenKind.LParen, "(", Pair(1, 8)),
 			Token(TokenKind.Integer, "0", Pair(1, 9)),
 			Token(TokenKind.RParen, ")", Pair(1, 10)),
+			Token(TokenKind.Semicolon, ";", Pair(1, 11)),
 			Token(TokenKind.Identifier, "b", Pair(2, 0)),
 			Token(TokenKind.Equal, "=", Pair(2, 2)),
 			Token(TokenKind.LParen, "(", Pair(2, 4)),
@@ -143,6 +146,7 @@ class LexerTest {
 			Token(TokenKind.RParen, ")", Pair(2, 11)),
 			Token(TokenKind.DblAsterisk, "**", Pair(2, 12)),
 			Token(TokenKind.Identifier, "a", Pair(2, 14)),
+			Token(TokenKind.Semicolon, ";", Pair(2, 15)),
 			Token(TokenKind.Identifier, "a", Pair(3, 0)),
 			Token(TokenKind.Plus, "+", Pair(3, 1)),
 			Token(TokenKind.Identifier, "b", Pair(3, 2)),

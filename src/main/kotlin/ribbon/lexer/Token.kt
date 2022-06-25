@@ -13,6 +13,8 @@ enum class TokenKind {
 	LParen,
 	RParen,
 
+	Semicolon,
+
 	Identifier,
 	Integer,
 	Eof
