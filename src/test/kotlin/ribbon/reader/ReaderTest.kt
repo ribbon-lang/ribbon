@@ -8,6 +8,7 @@ class ReaderTest {
 	private fun assertReaderOutput(reader: Reader, output: List<Triple<Char, Int, Int>>) {
 		output.forEach {
 			val (char, line, col) = it
+			assertTrue(reader.hasPrefix(char.toString()))
 			assertEquals(char, reader.peek())
 			assertEquals(Pair(line, col), reader.pos())
 			reader.next()

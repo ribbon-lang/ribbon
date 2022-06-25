@@ -9,6 +9,8 @@ class Reader(private val input: String) {
 
 	fun pos(): Position = Pair(lineNum, colNum)
 
+	fun hasPrefix(prefix: String): Boolean = input.startsWith(prefix, index)
+
 	fun peek(): Char = if (index < input.length) input[index] else Char.MIN_VALUE
 
 	fun next() {
