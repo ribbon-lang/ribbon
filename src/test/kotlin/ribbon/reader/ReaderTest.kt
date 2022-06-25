@@ -3,6 +3,8 @@ import kotlin.test.*
 import ribbon.reader.*
 
 class ReaderTest {
+	private fun makeReader(input: String): Reader = Reader(input.trimMargin())
+
 	private fun assertReaderOutput(reader: Reader, output: List<Triple<Char, Int, Int>>) {
 		output.forEach {
 			val (char, line, col) = it
@@ -16,15 +18,15 @@ class ReaderTest {
 
 	@Test
 	fun testEmptyReader() {
-		val reader = Reader("")
+		val reader = makeReader("")
 		assertReaderOutput(reader, listOf())
 	}
 
 	@Test
 	fun testOneLineInput() {
-		var reader = Reader("""
+		var reader = makeReader("""
 			|abc
-		""".trimMargin())
+		""")
 
 		assertReaderOutput(reader, listOf(
 			Triple('a', 1, 0),
@@ -32,10 +34,10 @@ class ReaderTest {
 			Triple('c', 1, 2)
 		))
 
-		reader = Reader("""
+		reader = makeReader("""
 			|ab
 			|
-		""".trimMargin())
+		""")
 
 		assertReaderOutput(reader, listOf(
 			Triple('a', 1, 0),
@@ -46,9 +48,9 @@ class ReaderTest {
 
 	@Test
 	fun testOneLineInputWithSpaces() {
-		var reader = Reader("""
+		var reader = makeReader("""
 			| a b
-		""".trimMargin())
+		""")
 
 		assertReaderOutput(reader, listOf(
 			Triple(' ', 1, 0),
@@ -57,10 +59,10 @@ class ReaderTest {
 			Triple('b', 1, 3)
 		))
 
-		reader = Reader("""
+		reader = makeReader("""
 			| a b
 			|
-		""".trimMargin())
+		""")
 
 		assertReaderOutput(reader, listOf(
 			Triple(' ', 1, 0),
@@ -73,12 +75,12 @@ class ReaderTest {
 
 	@Test
 	fun testMultipleLinesInput() {
-		val reader = Reader("""
+		val reader = makeReader("""
 			|ab
 			|c
 			|
 			|d
-		""".trimMargin())
+		""")
 
 		assertReaderOutput(reader, listOf(
 			Triple('a', 1, 0),
@@ -93,14 +95,14 @@ class ReaderTest {
 
 	@Test
 	fun testMultipleLinesInputWithSpaces() {
-		val reader = Reader("""
+		val reader = makeReader("""
 			| ab
 			|c
 			|
 			|  d
 			| e
 			|
-		""".trimMargin())
+		""")
 
 		assertReaderOutput(reader, listOf(
 			Triple(' ', 1, 0),
