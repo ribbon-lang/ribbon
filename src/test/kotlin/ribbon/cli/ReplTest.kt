@@ -73,6 +73,7 @@ class ReplTest {
 		}
 	}
 
+	/*
 	@Test
 	fun testNonCommandsEchoed() {
 		withTextFromSystemIn("Hello, Ribbon!").execute {
@@ -90,4 +91,5 @@ class ReplTest {
 			assertEquals(expected, actual)
 		}
 	}
+	*/
 }
