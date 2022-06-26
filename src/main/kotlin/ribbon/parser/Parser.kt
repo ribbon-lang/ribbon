@@ -35,8 +35,13 @@ class Parser(private val lexer: Lexer) {
 		}
 
 		lexer.next()
-		while (precedence(lexer.peek().kind) > prec) {
+		while (true) {
 			val op = lexer.peek()
+
+			// rewrite this better with associativity in mind
+			if (op.kind == TokenKind.DblAsterisk && precedence(op.kind) < prec) break
+			if (op.kind != TokenKind.DblAsterisk && precedence(op.kind) <= prec) break
+
 			lexer.next()
 			left = BinaryOp(left, op, parseExpr(precedence(op.kind)))
 		}

@@ -28,8 +28,8 @@ class ParserTest {
 		var parser = makeParser("-3 ** 6")
 		assertParserOutput(parser, "(-3 ** 6)")
 
-		parser = makeParser("3 ** -6")
-		assertParserOutput(parser, "(3 ** -6)")
+		parser = makeParser("3 ** -6 ** 0")
+		assertParserOutput(parser, "(3 ** (-6 ** 0))")
 
 		parser = makeParser("9 * 0 + 3")
 		assertParserOutput(parser, "((9 * 0) + 3)")
