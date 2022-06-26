@@ -2,7 +2,7 @@ import org.codehaus.groovy.runtime.ProcessGroovyMethods
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat.*
 import org.gradle.api.tasks.testing.logging.TestLogEvent.*
 
-version = "0.2.0"
+version = "0.3.0"
 
 plugins {
 	kotlin("jvm") version "1.7.0"
