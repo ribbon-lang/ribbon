@@ -1,7 +1,13 @@
 package ribbon.cli
 
+import ribbon.evaluator.Evaluator
+import ribbon.lexer.Lexer
+import ribbon.parser.Parser
+import ribbon.reader.Reader
+
 object Repl {
 	fun run() {
+		val evaluator = Evaluator()
 		println(Constants.REPL_WELCOME_MSG)
 
 		while (true) {
@@ -13,7 +19,10 @@ object Repl {
 			when (input) {
 				Constants.REPL_HELP_CMD -> println(Constants.REPL_HELP_MSG)
 				Constants.REPL_QUIT_CMD -> break
-				else -> println("You said: $input")
+				else -> {
+					val expr = Parser(Lexer(Reader(input))).parseExpr()
+					println(evaluator.evaluateExpr(expr))
+				}
 			}
 		}
 	}
